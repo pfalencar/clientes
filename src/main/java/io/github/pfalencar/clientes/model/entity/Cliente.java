@@ -1,5 +1,6 @@
 package io.github.pfalencar.clientes.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,13 +25,14 @@ public class Cliente {
     private String cpf;
 
     @Column(name = "data_cadastro")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCadastro;
 
 //Antes de persistir no BD, executa esse método
-//    @PrePersist
-//    public void prePersist () {
-//        setDataCadastro(LocalDate.now());
-//    }
+    @PrePersist
+    public void prePersist () {
+        setDataCadastro(LocalDate.now());
+    }
 
 
 }

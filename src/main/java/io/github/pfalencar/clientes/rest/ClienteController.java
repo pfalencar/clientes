@@ -4,16 +4,14 @@ import io.github.pfalencar.clientes.model.entity.Cliente;
 import io.github.pfalencar.clientes.model.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 //@RestController  - para esta classe ser reconhecida no contexto da aplicação como um controlador REST.
 // Que vai ser a classe que vai  criar nossa API de Clientes, que vai receber as requisições e enviar respostas HTTP REST
 // para os nossos clients.
 // Dentro da @RestController tem o @ResponseBody, que é para que o retorno de tudo nesta classe esteja no corpo da resposta da requisição.
-//Dentro da @RestController tem a @ResponseBody, que no mapeia o objeto de retorno, Cliente, para o corpo da minha resposta
+//Dentro da @RestController tem a @ResponseBody, que mapeia o objeto de retorno do método salvar, para o corpo da minha resposta
 //e vai em formato JSON.
 
 //@RequestMapping serve para mapear qual é a URL base, que vai ser tratada dentro deste controller.
@@ -69,9 +67,13 @@ public class ClienteController {
     //portanto, sempre que você quiser retornar o código de status 200-OK, não tem necessidade de colocar esta annotation.
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente salvar(Cliente cliente) {
+    public Cliente salvar(@RequestBody Cliente cliente) {
         return clienteRepository.save(cliente);
+    }
 
+    @GetMapping("{id}")
+    public Cliente acharPorId(@PathVariable Integer id) {
+        return clienteRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
 }
