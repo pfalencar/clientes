@@ -73,7 +73,43 @@ public class ClienteController {
 
     @GetMapping("{id}")
     public Cliente acharPorId(@PathVariable Integer id) {
-        return clienteRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return clienteRepository
+                .findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+//Primeira abordagem do método delete():
+//    @DeleteMapping("{id}")
+//    public void deletar (@PathVariable Integer id) {
+//        clienteRepository.deleteById(id);
+//    }
+
+    //Segunda abordagem do método delete():
+    //Nesta abordagem verifico primeiro se o cliente existe na base de dados e posso ter uma ação contra isso (lanço status NOT_FOUND).
+    //E se eu encontrar, deleto ele não retorno nada, só o status 204-NO_CONTENT
+
+    //204-NO_CONTENT é um código de sucesso, indica que não há nenhum objeto/recurso de retorno
+    //204-NO_CONTENT já é suficiente para o client (quem está consumindo esta API) saiba que o recurso foi deletado no servidor.
+
+    //se encontrar o cliente, entra no método map(), senão lanço NOT_FOUND
+    //findById retorna un Optional. Como veio um objeto, entra no map e pego o cliente.
+    //map() recebe o objeto cliente que veio do findById e retorna qlqr objeto, o mesmo objeto ou outro
+    //map() serve para fazer o mapeamento de um objeto para alguma coisa
+    //dentro do map preciso deletar o cliente.
+
+    //no map() preciso retornar algo, se eu retornar null entra na exceção NOT_FOUND,
+    //também não vou retornar o cliente, porque não vou fazer nada com ele.
+    //Então, retorno Void.TYPE para não ficar sem retorno ou retornar nulo.
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletar (@PathVariable Integer id) {
+        clienteRepository
+                .findById(id)
+                .map(cliente -> {
+                    clienteRepository.delete(cliente);
+                    return Void.TYPE;
+                })
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
 }
