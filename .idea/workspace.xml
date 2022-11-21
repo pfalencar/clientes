@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ee032d1f-6049-4ed6-93ff-904428da3aca" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/pfalencar/clientes/model/entity/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/github/pfalencar/clientes/model/entity/Cliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/pfalencar/clientes/rest/ClienteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/github/pfalencar/clientes/rest/ClienteController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/io/github/pfalencar/clientes/model/entity/Cliente.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/github/pfalencar/clientes/model/entity/Cliente.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/io/github/pfalencar/clientes/rest/ClienteController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/github/pfalencar/clientes/rest/ClienteController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
