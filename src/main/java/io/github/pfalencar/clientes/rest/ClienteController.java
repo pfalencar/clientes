@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 //@RestController  - para esta classe ser reconhecida no contexto da aplicação como um controlador REST.
 // Que vai ser a classe que vai  criar nossa API de Clientes, que vai receber as requisições e enviar respostas HTTP REST
 // para os nossos clients.
@@ -68,7 +70,13 @@ public class ClienteController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente salvar(@RequestBody Cliente cliente) {
+
         return clienteRepository.save(cliente);
+    }
+
+    @GetMapping
+    public List<Cliente> findAll() {
+        return clienteRepository.findAll();
     }
 
     @GetMapping("{id}")
@@ -109,6 +117,22 @@ public class ClienteController {
                 .map(cliente -> {
                     clienteRepository.delete(cliente);
                     return Void.TYPE;
+                })
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @PutMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void atualizar (@PathVariable Integer id, @RequestBody Cliente clienteAtualizado) {
+        clienteRepository
+                .findById(id)  //pega do id que foi passado na URL
+                .map(cliente -> { //este é o cliente que foi encontrado pelo findById(id)
+                    //clienteAtualizado.setId(cliente.getId());
+                    //return clienteRepository.save(clienteAtualizado);
+                    //ou
+                    cliente.setNome(clienteAtualizado.getNome());
+                    cliente.setCpf(clienteAtualizado.getCpf());
+                    return clienteRepository.save(cliente);
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
