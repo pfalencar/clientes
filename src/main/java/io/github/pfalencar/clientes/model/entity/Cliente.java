@@ -21,13 +21,13 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //IDENTITY deixa para o banco fazer o autoincremento.
     private Integer id;
 
-    @Column(nullable = false, length = 150)
-    @NotEmpty
+    @Column(nullable = false, length = 150) //201 created com requisição "nome":"", mas erro 500 sem o atributo na requisição.
+    @NotEmpty(message = "{campo.nome.obrigatorio}") //Testando somente com @NotEmpty => "nome":"" dá erro 500
     private String nome;
 
     @Column(nullable = false, length = 11)
-    @NotNull
-    @CPF
+    @NotNull(message = "{campo.cpf.obrigatorio}") //poderia colocar a mensagem direto aqui, mas fica chumbado.
+    @CPF(message = "{campo.cpf.invalido}") //as chaves indica que é um expressão que deve ser interpolada.
     private String cpf;
 
     @Column(name = "data_cadastro", updatable = false)

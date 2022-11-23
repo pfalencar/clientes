@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 
 //@RestController  - para esta classe ser reconhecida no contexto da aplicação como um controlador REST.
@@ -69,7 +70,7 @@ public class ClienteController {
     //portanto, sempre que você quiser retornar o código de status 200-OK, não tem necessidade de colocar esta annotation.
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente salvar(@RequestBody Cliente cliente) {
+    public Cliente salvar(@RequestBody @Valid Cliente cliente) {
 
         return clienteRepository.save(cliente);
     }
@@ -123,7 +124,7 @@ public class ClienteController {
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void atualizar (@PathVariable Integer id, @RequestBody Cliente clienteAtualizado) {
+    public void atualizar (@PathVariable Integer id, @RequestBody @Valid Cliente clienteAtualizado) {
         clienteRepository
                 .findById(id)  //pega do id que foi passado na URL
                 .map(cliente -> { //este é o cliente que foi encontrado pelo findById(id)
