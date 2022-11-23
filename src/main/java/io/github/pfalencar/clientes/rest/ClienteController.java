@@ -84,7 +84,7 @@ public class ClienteController {
     public Cliente acharPorId(@PathVariable Integer id) {
         return clienteRepository
                 .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
     }
 
 //Primeira abordagem do método delete():
@@ -119,7 +119,7 @@ public class ClienteController {
                     clienteRepository.delete(cliente);
                     return Void.TYPE;
                 })
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
     }
 
     @PutMapping("{id}")
@@ -135,6 +135,6 @@ public class ClienteController {
                     cliente.setCpf(clienteAtualizado.getCpf());
                     return clienteRepository.save(cliente);
                 })
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
     }
 }
